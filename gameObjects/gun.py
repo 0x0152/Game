@@ -31,7 +31,7 @@ class Gun(GameObject):
 
         pygame.draw.line(screen, self._color, self._position.GetArrInt(), endLine.GetArrInt())
 
-    def Update(self, event, screen):
+    def Update(self, screen, events):
         pass
 
     def UpdateGun(self, position, angle, size):

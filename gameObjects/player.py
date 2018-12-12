@@ -38,22 +38,19 @@ class Player(GameObject):
     def Move(self, direction, duration):
         self._moving = animation.Moving(direction, duration, consts.SPEED_ANIMATION_PLAYER_MOVING)
     
-    def Update(self, screen):
+    def Update(self, screen, events):
         self._angle = self._rotation.Rotation(self._angle)
-
         oldPosition = copy.deepcopy(self._position)
         self._position = self._moving.Moving(copy.deepcopy(oldPosition), self._angle)
         self._gun.UpdateGun(self._position, self._angle, self._size)
-
-        self.Draw(screen)
 
         if collision.IsOutGamePlace(copy.deepcopy(self._position), self._size) == True or \
            collision.IsCollisionPlayer(screen, copy.deepcopy(self._position), self._angle, self._size, self._moving.GetDirection()) == True:
             self._position = oldPosition 
             
         self._gun.UpdateGun(self._position, self._angle, self._size)
-        self.Draw(screen)
     def Draw(self, screen):
+
         pygame.draw.circle(screen, self._color, self._position.GetArrInt(), self._size)
         self._gun.Draw(screen)
 

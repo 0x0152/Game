@@ -4,7 +4,7 @@ class GameObject:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def Update(self, event, screen):
+    def Update(self, screen, events):
         pass
 
     @abstractmethod

@@ -6,8 +6,10 @@ class Scene:
     def __init__(self):
         #key -> string(name event)
         #value Scene(next scene, opens if exec event)
+        self._oldScreen
         self._nextScene = None
         self._scenes = {}
+        self._gameObjects = []
 
     def BindSceneWithEvent(self, event, scene):
         self._scenes[event] = scene
@@ -23,20 +25,23 @@ class Scene:
             print("undefined key({})".format(event))
 
     @abstractmethod
-    def AddObject(self, object):
-        pass
+    def AddObject(self, obj):
+        self._gameObjects.append(obj)
+        return len(self._gameObjects)
 
     @abstractmethod
     def DeleteObject(self, idObject):
-        pass
+        self._gameObjects.remove(self._gameObjects[idObject])
 
     @abstractmethod
-    def Update(self, event, screen):
-        pass
+    def Update(self, screen, events):
+        for obj in self._gameObjects:
+            obj.Update(screen, events)
 
     @abstractmethod
     def Draw(self, screen):
-        pass
+        for obj in self._gameObjects:
+            obj.Draw(screen)
 
     @abstractmethod
     def Enter(self):

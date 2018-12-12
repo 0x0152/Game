@@ -27,7 +27,7 @@ class Game:
 
             for event in pygame.event.get():
 
-                self._currentScene.Update(screen, event)
+                self._currentScene.Update(screen, pygame.event.get())
 
                 if event.type == pygame.QUIT:
                     done = True

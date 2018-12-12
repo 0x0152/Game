@@ -13,23 +13,16 @@ class TestScene(Scene):
         self._map = map.Map("img.png")
         pass
 
-    def AddObject(self, object):
-        pass
+    def Update(self, screen, events):
+        Scene.Update(self, screen, events) 
 
-    def DeleteObject(self, idObject):
-        pass
-
-    def Update(self, screen, event):
-        if event.type == pygame.KEYDOWN:
-            self.onEvent("New")
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                self.onEvent("New")
         
-        pass
-
     def Draw(self, screen):
         self._map.Draw(screen)
-
-        for pl in self._players:
-            pl.Update(screen)
+        Scene.Draw(self, screen) 
 
     def Enter(self):
         self.BindSceneWithEvent("New", TestScene2())
@@ -39,7 +32,9 @@ class TestScene(Scene):
         self._players = [player.Player(200, 200, 180)]
 
         for pl in range(0, 20):
-            self._players.append(player.Player(random.randint(20, 780), random.randint(20, 480), random.randint(0, 360)))
+            p = player.Player(random.randint(20, 780), random.randint(20, 480), random.randint(0, 360))
+            self.AddObject(p)
+            self._players.append(p)
 
         for pl in self._players:
             pl.Move(1, 10000)
